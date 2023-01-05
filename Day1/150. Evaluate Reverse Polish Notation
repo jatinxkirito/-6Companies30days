@@ -1,0 +1,63 @@
+class Solution {
+    int stoi(string s)
+    {
+        reverse(s.begin(),s.end());
+        int c=1;
+        int val=0;
+        for(auto i: s)
+        {
+            if(i=='-')
+            val*=-1;
+            else
+           { val+=(i-'0')*c;
+            c*=10;}
+        }
+        cout<<val<<endl;
+        return val;
+    }
+public:
+
+    int evalRPN(vector<string>& tokens) {
+        stack<int> ans;
+        for(auto i: tokens)
+        {
+            if(i=="+")
+            {
+                int x=ans.top();
+                ans.pop();
+                int y=ans.top();
+                ans.pop();
+                ans.push(x+y);
+            }
+           else if(i=="-")
+            {
+                int x=ans.top();
+                ans.pop();
+                int y=ans.top();
+                ans.pop();
+                ans.push(-x+y);
+            }
+           else if(i=="*")
+            {
+                int x=ans.top();
+                ans.pop();
+                int y=ans.top();
+                ans.pop();
+                ans.push(x*y);
+            }
+            else if(i=="/")
+            {
+                int x=ans.top();
+                ans.pop();
+                int y=ans.top();
+                ans.pop();
+                ans.push(y/x);
+            }
+            else
+            {
+                ans.push(stoi(i));
+            }
+        }
+        return ans.top();
+    }
+};
