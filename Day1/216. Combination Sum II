@@ -1,0 +1,39 @@
+class Solution {
+    void fn(int nu,int su,int n,int k,vector<int> &te,vector<vector<int>> &ans)
+    {
+        su+=nu;
+        --k;
+        te.push_back(nu);
+        if(k==0)
+        {
+            if(su==n)
+            {
+                ans.push_back(te);
+                
+                
+            }
+            te.pop_back();
+            return;
+        }
+        if(su>n)
+        {
+        te.pop_back();
+        return;
+        }
+
+        for(int i=nu+1;i<=9;i++)
+        {
+            fn(i,su,n,k,te,ans);
+        }
+        te.pop_back();
+
+    }
+public:
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> ans;
+        vector<int> te;
+        for(int i=1;i<=9;i++)
+        fn(i,0,n,k,te,ans);
+        return ans;
+    }
+};
