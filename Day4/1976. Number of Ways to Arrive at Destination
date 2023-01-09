@@ -1,0 +1,47 @@
+class Solution {
+    int maxi=1e9+7;
+    
+public:
+    int countPaths(int n, vector<vector<int>>& roads) {
+
+         vector<vector<pair<int,long long int>>> g(n);
+         for(auto i: roads)
+         {
+             g[i[0]].push_back({i[1],i[2]});
+             g[i[1]].push_back({i[0],i[2]});
+         }
+         vector<long long int> dis(n,LONG_MAX);
+         set<pair<long long int,int>> fi;
+         fi.insert({0,0});
+         vector<long long int> ways(n);
+         ways[0]=1;
+         while(!fi.empty())
+         {
+             auto i=fi.begin();
+             int in=i->second;
+             long long int wt=i->first;
+             fi.erase(i);
+             if(dis[in]<wt)
+             continue;
+             dis[in]=wt;
+             for(auto i: g[in])
+             {
+                 int v=i.first;
+                 wt=i.second;
+                 if(dis[v]>dis[in]+wt)
+                {
+                    ways[v]=ways[in];
+                    dis[v]=dis[in]+wt;
+                     fi.insert({dis[v],v});
+                }
+                else if(dis[v]==dis[in]+wt)
+                {
+                    ways[v]=(ways[v]+ways[in])%maxi;
+                }
+             }
+
+         }
+        
+         return ways[n-1];
+    }
+};
