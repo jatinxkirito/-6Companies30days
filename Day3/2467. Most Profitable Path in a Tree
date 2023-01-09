@@ -1,0 +1,69 @@
+class Solution {
+    void dfs(int cu,int l,vector<vector<int>> &g,vector<int> &le,int par)
+    {
+      le[cu]=l;
+      for(auto i: g[cu])
+      {
+          if(i!=par)
+          {
+              dfs(i,l+1,g,le,cu);
+          }
+      }
+    }
+     void dfs2(int cu,vector<vector<int>> &g,vector<int> &le,vector<int> &bt)
+    {
+      bt.push_back(cu);
+      if(cu==0)
+      return;
+      for(auto i: g[cu])
+      {
+          if(le[i]<le[cu])
+          dfs2(i,g,le,bt);
+      }
+    }
+    void dfs3(int cu,vector<vector<int>> &g,vector<int> &le,int par,int st,int &ma,vector<int> &amount)
+    {
+        st+=amount[cu];
+      if(g[cu].size()==1&&cu!=0)
+      {
+          ma=max(st,ma);
+          return ;
+      }
+      for(auto i: g[cu])
+      {
+          if(i!=par)
+          {
+              dfs3(i,g,le,cu,st,ma,amount);
+          }
+      }
+    }
+public:
+    int mostProfitablePath(vector<vector<int>>& edges, int bob, vector<int>& amount) {
+        int n=amount.size();
+         vector<vector<int>> g(n);
+         for(int i=0;i<n-1;i++)
+         {
+             g[edges[i][0]].push_back(edges[i][1]);
+              g[edges[i][1]].push_back(edges[i][0]);
+         }
+        vector<int> le(n);
+         dfs(0,0,g,le,-1);
+        vector<int> bt;
+        dfs2(bob,g,le,bt);
+        for(int i=0;i<bt.size();i++)
+        {
+            if(i<le[bt[i]])
+            amount[bt[i]]=0;
+            else if(i==le[bt[i]])
+            {
+                amount[bt[i]]=amount[bt[i]]/2;
+            }
+        }
+       int ma=-1e9+7;
+       int cu=0;
+       for(auto i: amount)
+       cout<<i<<" ";
+     dfs3(cu,g,le,-1,0,ma,amount);
+       return ma;
+    }
+};
