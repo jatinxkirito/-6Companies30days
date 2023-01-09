@@ -1,0 +1,44 @@
+class Solution {
+     bool dfs(vector<int> g[],int ver,vector<int> &vis,vector<int> &tvis)
+    {
+        vis[ver]=1;
+        tvis[ver]=1;
+        for(auto i: g[ver])
+        {
+            if(!vis[i])
+            {
+                if(dfs(g,i,vis,tvis))
+                return true;
+            }
+            else if(tvis[i]==1)
+            return true;
+        }
+        tvis[ver]=0;
+        return false;
+    }
+public:
+    bool canFinish(int n, vector<vector<int>>& prerequisites) {
+        int p = prerequisites.size();
+	   vector<int> g[n];
+	   for(int i =0;i<p;i++){
+	       int u = prerequisites[i][1];
+	       int v = prerequisites[i][0];
+	       
+	       g[u].push_back(v);
+	   }
+	   vector<int> vis(n),tvis(n);
+	   
+	   bool k=false;
+	   for(int i=0;i<n;i++)
+	   {
+	       if((!vis[i]))
+	       {
+	           if(dfs(g,i,vis,tvis))
+          { k=true;
+	           break;}
+	       }
+	   }
+	   
+	   return !k;
+    }
+};
