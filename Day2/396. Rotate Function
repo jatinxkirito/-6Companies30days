@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int maxRotateFunction(vector<int>& a) {
+        int n=a.size();
+       int ma=0;
+       int su=0;
+       int prev=0;
+       for(int i=0;i<n;i++)
+       {su+=a[i];prev+=i*a[i];}
+       ma=prev;
+       for(int i=n-1;i>=0;i--)
+       {
+           int cur=prev+su-n*a[i];
+           ma=max(ma,cur);
+           prev=cur;
+       }
+       return ma;
+
+        
+    }
+};
