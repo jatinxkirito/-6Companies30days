@@ -1,0 +1,82 @@
+class ob{
+    public:
+    string fi="";
+    int ti=0;
+    int am=0;
+    string re="";
+    
+    ob(string fik,int tik,int amk,string rek)
+    {
+        fi=fik;
+        ti=tik;
+        am=amk;
+        re=rek;
+    }
+
+};
+class Solution {
+    int stoi(string s)
+    {
+        int n=s.length();
+        int x=1;
+        int ans=0;
+        for(int i=n-1;i>=0;i--)
+        {
+            ans+=(s[i]-'0')*x;
+            x*=10;
+
+        }
+        return ans;
+    }
+public:
+    vector<string> invalidTransactions(vector<string>& t) {
+        vector<ob> kp;
+        vector<pair<int,int>> li;
+        int x=0;
+        for(auto s: t)
+        {
+           string fi="",ti="",am="",re="";
+           int cnt=0;
+           int n=s.length();
+           for(int i=0;i<n;i++)
+           {
+               if(s[i]==',')
+              { ++cnt;continue;}
+               if(cnt==0)
+               fi.push_back(s[i]);
+               else if(cnt==1)
+               ti.push_back(s[i]);
+               else if(cnt==2)
+               am.push_back(s[i]);
+               else
+               re.push_back(s[i]);
+           }
+           ob k= ob(fi,stoi(ti),stoi(am),re);
+           kp.push_back(k);
+           li.push_back({stoi(ti),x});
+           ++x;
+        }
+        sort(li.begin(),li.end());
+        set<int> ind;
+        int n=li.size();
+        for(int j=0;j<n;j++)
+        {
+            int i=li[j].second;
+            if(kp[i].am>1000)
+            ind.insert(i);
+            int t1=kp[i].ti;
+            for(int k=j+1;k<n;k++)
+            {
+                int x=li[k].second;
+                if(kp[x].am>1000)
+                ind.insert(x);
+                if(kp[x].ti-t1<=60&&kp[x].fi==kp[i].fi&&kp[x].re!=kp[i].re)
+                {ind.insert(x);ind.insert(i);}
+            }
+        }
+        vector<string> ans;
+        for(auto i: ind)
+        ans.push_back(t[i]);
+        return ans;
+    }
+};
