@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {
+     vector<vector<int>> pt;
+     pt.push_back(p1);
+     pt.push_back(p2);
+     pt.push_back(p3);
+     pt.push_back(p4);
+     map<int,int> a;
+     for(int i=0;i<4;i++)
+     {
+         for(int j=i+1;j<4;j++)
+         {
+             int x=pt[i][0]-pt[j][0];
+             int y=pt[i][1]-pt[j][1];
+             a[x*x+y*y]++;
+         }
+     }
+     if(a.size()!=2)
+     return 0;
+     if(2*(a.begin()->first)==(prev(a.end())->first))
+     return 1;
+     return 0;
+    }
+};
