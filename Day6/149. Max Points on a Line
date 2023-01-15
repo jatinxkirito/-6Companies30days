@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        map<pair<double,double>,set<int>> cnt;
+        double inf=-1e9+7;
+        int n=points.size();
+        if(n==1)
+        return 1;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=1;j<n;j++)
+            {
+
+                double x1=points[i][0];
+                double y1=points[i][1];
+                double x2=points[j][0];
+                double y2=points[j][1];
+                if(x1==x2)
+                {
+                    cnt[{inf,x1}].insert(i);
+                    cnt[{inf,x1}].insert(j);
+                }
+                else
+                {
+                    double s=(y2-y1)/(x2-x1);
+                    double vl=(-s*x1)+y1;
+                    cnt[{s,vl}].insert(i);
+                    cnt[{s,vl}].insert(j);
+                }
+            }
+
+        }
+        int ma=0;
+        for(auto i: cnt)
+        {
+         int x=i.second.size();
+         ma=max(ma,x);
+        }
+        return ma;
+        
+    }
+};
