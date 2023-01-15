@@ -1,0 +1,46 @@
+
+class Solution {
+public:
+    vector<int> maximumBobPoints(int n, vector<int>& a) {
+        vector<pair<int,int>> pr;
+        for(int i=0;i<12;i++)
+        {
+            pr.push_back({a[i]+1,i});
+        }
+        cout<<pr.size()<<endl;
+         sort(pr.begin(),pr.end());
+         for(auto i: pr)
+         cout<<i.first<<" "<<i.second<<endl;
+        vector<vector<int>> dp(13,vector<int>(n+1));
+        for(int i=1;i<=12;i++)
+        {
+            for(int j=1;j<=n;j++)
+            {
+                if(j<pr[i-1].first)
+                dp[i][j]=dp[i-1][j];
+                else
+                {
+                    dp[i][j]=max(dp[i-1][j],dp[i-1][j-pr[i-1].first]+pr[i-1].second);
+                }
+            }
+        }
+        vector<int> ans(12);
+        int j=n;
+        int i=12;
+        cout<<dp[i][j]<<endl;
+        while(i>0&&j>0)
+        {
+            if(dp[i][j]==dp[i-1][j])
+            {
+                i--;
+                continue;
+            }
+            if(j>=pr[i-1].first)
+            {ans[pr[i-1].second]=pr[i-1].first;
+            j-=pr[i-1].first;}
+             i--;
+        }
+        ans[1]+=j;
+        return ans;
+    }
+};
