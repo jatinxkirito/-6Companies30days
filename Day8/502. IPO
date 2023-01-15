@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {
+        vector<pair<int,int>> pf;
+        int n=profits.size();
+        for(int i=0;i<n;i++)
+        {
+            pf.push_back({capital[i],profits[i]});
+        }
+        sort(pf.begin(),pf.end());
+        int ptr=0;
+        multiset<int> le;
+        while(k>0)
+        {
+            while(ptr<n&&pf[ptr].first<=w)
+           { le.insert(pf[ptr].second);++ptr;}
+           if(le.empty())
+           break;
+           auto i=prev(le.end());
+           w+=(*i);
+           le.erase(i);
+           k--;
+        }
+        return w;
+    }
+};
