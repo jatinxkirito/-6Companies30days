@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int numberOfBoomerangs(vector<vector<int>>& a) {
+       unordered_map<int,vector<pair<int,int>>> le;
+        int n=a.size();
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(i==j)
+                continue;
+                int x=a[i][0]-a[j][0];
+                int y=a[i][1]-a[j][1];
+                le[x*x+y*y].push_back({i,j});
+            }
+        }
+        long long int ans=0;
+        for(auto i: le)
+        {
+            unordered_map<int,int> t,b;
+            for(auto j: i.second)
+            {
+                t[j.first]++;
+                b[j.second]++;
+            }
+            for(auto j: t)
+            {
+                ans+=(j.second)*(b[j.first]);
+            }
+            ans-=i.second.size();
+        }
+        return ans;
+
+    }
+};
