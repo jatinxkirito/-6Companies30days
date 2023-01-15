@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int minimumCardPickup(vector<int>& ca) {
+        unordered_map<int,vector<int>> tab;
+        int ans=1e9+7;
+        for(int i=0;i<ca.size();i++)
+        {
+            tab[ca[i]].push_back(i);
+        }
+        for(auto i: tab)
+        {
+            int n=i.second.size();
+            for(int j=1;j<n;j++)
+            {
+                ans=min(ans,i.second[j]-i.second[j-1]);
+            }
+        }
+        if(ans==1e9+7)
+        return -1;
+        return ans+1;
+    }
+};
