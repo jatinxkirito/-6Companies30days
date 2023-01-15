@@ -1,0 +1,35 @@
+class Solution {
+    long long int calc(string s)
+    {
+        long long int val=0;
+        long long int te=1;
+        int n=s.length();
+        for(int i=0;i<n;i++)
+        {
+            val+=(s[i]-'0')*te;
+            te*=10;
+        }
+        return val;
+    }
+public:
+    int countNicePairs(vector<int>& nums) {
+     unordered_map<long long int,long long int> cnt;
+     for(auto i: nums)
+     {
+         string s=to_string(i);
+         long long int val=calc(s);
+         cnt[i-val]++;
+     }   
+     long long int maxi=1e9+7;
+     long long int ans=0;
+     for(auto i: cnt)
+     {
+         //cout<<i.second<<" "<<i.first<<endl;
+         long long int te=i.second;
+         te=((te*(te-1))/(2*1LL))%maxi;
+         ans=(ans+te)%maxi;
+
+     }
+     return int(ans);
+    }
+};
