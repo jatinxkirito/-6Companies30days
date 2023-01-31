@@ -1,0 +1,53 @@
+class Solution {
+    void tv(int j,vector<vector<int>> &sp,vector<int> &ne,vector<int> &pri,int &ma,int cu,int m,int n,vector<int> &cnt)
+    {
+        if(j==m)
+        {
+            for(int i=0;i<n;i++)
+            {
+                if(ne[i]>cnt[i])
+                cu+=(ne[i]-cnt[i])*pri[i];
+            }
+            ma=min(ma,cu);
+            return;
+        }
+        tv(j+1,sp,ne,pri,ma,cu,m,n,cnt);
+        int f=1;
+        for(int i=0;i<n;i++)
+        {
+            if(cnt[i]+sp[j][i]<=ne[i])
+            continue;
+            f=0;
+            break;
+        }
+        if(f)
+        {
+             int f=1;
+        for(int i=0;i<n;i++)
+        {
+            cnt[i]+=sp[j][i];
+            
+            
+        }
+        tv(j,sp,ne,pri,ma,cu+sp[j][n],m,n,cnt);
+        for(int i=0;i<n;i++)
+        {
+            cnt[i]-=sp[j][i];
+            
+            
+        }
+        }
+
+
+    }
+public:
+    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs) {
+        int n=price.size();
+        int m=special.size();
+        vector<int> cnt(n);
+        int ma=1e9+7;
+        tv(0,special,needs,price,ma,0,m,n,cnt);
+        return ma;
+
+    }
+};
