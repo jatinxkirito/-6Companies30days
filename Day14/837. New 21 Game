@@ -1,0 +1,26 @@
+class Solution {
+public:
+    double new21Game(int n, int k, int w) {
+       vector<double> te(k+w); 
+       te[0]=1;
+       double x=w;
+       double prev=0;
+       for(int i=1;i<=k;i++)
+       {
+           prev=prev-((i-w-1)>=0?te[i-w-1]:0)+te[i-1];
+           te[i]=prev/x;
+       }
+       double req;
+       req=te[k];
+       for(int i=k+1;i<k+w;i++)
+       {
+           if(i>n)
+           break;
+           prev=prev-((i-w-1)>=0?te[i-w-1]:0);
+           te[i]=prev/x;
+           req+=te[i];
+       }
+       
+     return req;
+    }
+};
