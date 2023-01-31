@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        vector<int> a(n,1);
+        int z=0;
+        int in=0;
+        while(z<n-1)
+        {
+            int x=k;
+            x--;
+            while(x>0)
+            {
+                if(a[in]==0)
+                {in=(in+1)%n;continue;}
+                in=(in+1)%n;
+                --x;
+            }
+             while(a[in]!=1)
+            {
+                 in=(in+1)%n;
+            }
+            a[in]=0;
+            cout<<in<<endl;
+            in=(in+1)%n;
+            while(a[in]!=1)
+            {
+                 in=(in+1)%n;
+            }
+            cout<<" next "<<in<<endl;
+            ++z;
+        }
+        int st=0;
+        for(int i=0;i<n;i++)
+        {
+          if(a[i]==1)
+          {
+              st=i;
+              break;
+          }
+        }
+        return st+1;
+    }
+};
