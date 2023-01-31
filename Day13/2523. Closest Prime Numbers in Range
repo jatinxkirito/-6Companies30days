@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> closestPrimes(int left, int right) {
+       int n=right+1;
+       vector<int> tb(n+1);
+       tb[0]=1;
+       tb[1]=1;
+       for(int i=2;i<=n;i++)
+       {
+           if(tb[i])
+           continue;
+           for(int j=2*i;j<=n;j+=i)
+           tb[j]=1;
+       }
+       vector<int> lis;
+       for(int i=left;i<=right;i++)
+       {
+           if(!tb[i])
+           lis.push_back(i);
+       }
+       if(lis.size()<2)
+       return {-1,-1};
+       int st=0,en=1e9+7;
+       for(int i=0;i<lis.size()-1;i++)
+       {
+           int a=lis[i];
+           int b=lis[i+1];
+           if(b-a<en-st)
+           {
+               en=b;
+               st=a;
+           }
+       }
+       return {st,en};
+    }
+};
