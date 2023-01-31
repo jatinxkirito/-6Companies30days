@@ -1,0 +1,63 @@
+class Solution {
+public:
+    vector<int> rearrangeBarcodes(vector<int>& barcodes) {
+        unordered_map<int,int> cnt;
+        for(auto i: barcodes)
+        cnt[i]++;
+        vector<pair<int,int>> st;
+        for(auto i: cnt)
+        st.push_back({i.second,i.first});
+        sort(st.begin(),st.end());
+        reverse(st.begin(),st.end());
+        
+        int ct=barcodes.size();
+        vector<int> ans(ct);
+        int i=0;
+        int in=0;
+        for(int i=0;i<ct;i+=2)
+        {
+            ans[i]=st[in].second;
+            st[in].first--;
+            if(st[in].first==0)
+            ++in;
+        }
+        in=0;
+        for(int i=1;i<ct;i+=2)
+        {
+            while(st[in].first==0)
+            ++in;
+            ans[i]=st[in].second;
+            st[in].first--;
+        }
+        return ans;
+        // while(ct>0)
+        // {
+        
+        //         if(ct==1)
+        //         {   if(st[j].second)
+        //             ans.push_back(st[j].second);
+        //             else
+        //             ans.push_back(st[i].second);
+        //             --ct;
+        //             continue;
+        //         }
+            
+        //     ans.push_back(st[j].second);
+        //     ans.push_back(st[i].second);
+        //     st[i].first--;
+        //     st[j].first--;
+        //     if(st[i].first==0)
+        //     {
+        //         while(st[i].first!=0&&i!=j)
+        //         i--;
+        //     }
+        //     if(st[j].second==0)
+        //     {
+        //         while(st[j].second!=0&&i!=j)
+        //         j--;
+        //     }
+        //     ct-=2;
+        // }
+        // return ans;
+    }
+};
