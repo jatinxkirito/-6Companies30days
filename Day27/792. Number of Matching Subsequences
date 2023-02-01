@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int numMatchingSubseq(string s, vector<string>& words) {
+        int n=s.length();
+        vector<vector<int>> g(n,vector<int>(26,-1));
+        vector<int> f(26,-1);
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int j=0;j<26;j++ )
+            {
+                g[i][j]=f[j];
+            }
+            f[s[i]-'a']=i;
+        }
+        int cnt=0;
+        for(auto i: f)
+        cout<<i<<" ";
+        cout<<endl;
+        for(auto i: words)
+        {
+            int st=f[i[0]-'a'];
+            int le=i.length();
+            int j=0;
+            cout<<i[0];
+            while(st!=-1&&le)
+            {
+                ++j;
+                --le;
+                if(le==0)
+                break;
+                cout<<i[j];
+                int cu=st;
+                st=g[st][i[j]-'a'];
+
+            }
+            cout<<endl;
+            if(le==0)
+            ++cnt;
+        }
+        return cnt;
+    }
+};
