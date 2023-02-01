@@ -1,0 +1,44 @@
+class Solution {
+    double x,y,u_x,u_y,l_x,l_y,rad;
+     default_random_engine re;
+public:
+    Solution(double radius, double x_center, double y_center) {
+        
+        x=x_center;
+        y=y_center;
+        u_x=x+radius;
+        l_x=x-radius;
+        u_y=y+radius;
+        l_y=y-radius;
+        rad=radius;
+
+    }
+    
+    vector<double> randPoint() {
+
+  
+    
+  
+    // Getting a random double value
+    while(true)
+    {
+        uniform_real_distribution<double> unif(l_x,
+                                           u_x);
+     uniform_real_distribution<double> uni2(l_y,
+                                           u_y);
+   
+        double xk = unif(re);
+        double yk=uni2(re);
+        if((xk-x)*(xk-x)+(yk-y)*(yk-y)<=rad*rad)
+        return {xk,yk};
+
+    }
+        
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(radius, x_center, y_center);
+ * vector<double> param_1 = obj->randPoint();
+ */
