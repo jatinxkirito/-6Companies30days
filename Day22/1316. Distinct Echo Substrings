@@ -1,0 +1,33 @@
+class Solution {
+    bool ch(string &s)
+    {
+        int j=s.size()/2;
+        for(int i=0;i<s.size()/2;i++)
+        {
+            if(s[i]!=s[j])
+            return false;
+            ++j;
+        }
+        return true;
+    }
+public:
+    int distinctEchoSubstrings(string s) {
+        unordered_set<string> ans;
+        int n=s.length();
+        for(int i=0;i<n;i++)
+        {
+            string te="";
+            for(int j=i;j<n;j+=2)
+            {
+                te.push_back(s[j]);
+                if(j+1<n)
+                te.push_back(s[j+1]);
+                else
+                break;
+                if(ch(te))
+                ans.insert(te);
+            }
+        }
+        return ans.size();
+    }
+};
