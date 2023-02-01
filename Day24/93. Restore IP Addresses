@@ -1,0 +1,151 @@
+class Solution {
+    int stoi(string s)
+    {
+        reverse(s.begin(),s.end());
+        int ans=0;
+        int te=1;
+        for(auto i: s)
+        {
+            ans+=(i-'0')*te;
+            te*=10;
+        }
+        return ans;
+    }
+    bool chck(string s)
+    {
+        int n=s.size();
+        if(n==1)
+        {
+            if(s[0]>='0'&&s[0]<='9')
+            return true;
+            return false;
+        }
+        if(s[0]=='0')
+        return false;
+        for(int i=0;i<n;i++)
+        {
+             if(s[i]>='0'&&s[i]<='9')
+            continue;
+            return false;
+        }
+        if(s.length()>3||stoi(s)>255)
+        return false;
+        return true;
+    }
+    bool isval(string s,int n)
+    {
+        string te="";
+        int cnt=0;
+        int i=0;
+        int f=1;
+        while(i<s.length())
+        {
+            if(s[i]=='.')
+            {
+                i++;
+                ++cnt;
+                break;
+                
+            }
+            te.push_back(s[i]);
+            i++;
+
+        }
+        if(!chck(te))
+        f=0;
+        te="";
+         while(i<s.length())
+        {
+            if(s[i]=='.')
+            {
+                i++;
+                ++cnt;
+                break;
+                
+            }
+            te.push_back(s[i]);
+            i++;
+
+        }
+        if(!chck(te))
+        f=0;
+        te="";
+         while(i<s.length())
+        {
+            if(s[i]=='.')
+            {
+                i++;
+                ++cnt;
+                break;
+                
+            }
+            te.push_back(s[i]);
+            i++;
+
+        }
+        if(!chck(te))
+        f=0;
+        te="";
+         while(i<s.length())
+        {
+            if(s[i]=='.')
+            {
+                i++;
+                ++cnt;
+                break;
+                
+            }
+            te.push_back(s[i]);
+            i++;
+
+        }
+        if(!chck(te))
+        f=0;
+        te="";
+        if(cnt==3&&f)
+        return true;
+        return false;
+    }
+    void at(int i,int cnt,string &te,set<string> &ans,int n,string &s)
+    {
+        if(cnt==0)
+        {
+            if(i==n)
+            {
+                if(isval(te,n))
+                ans.insert(te);
+                return;
+            }
+        }
+        if(i==n)
+        return;
+        te.push_back(s[i]);
+        at(i+1,cnt,te,ans,n,s);
+        te.pop_back();
+        if(cnt>0&&i!=0)
+        {
+         te.push_back('.');
+         te.push_back(s[i]);
+         at(i+1,cnt-1,te,ans,n,s);
+         te.pop_back();
+         te.pop_back();
+        }
+
+    }
+public:
+    vector<string> restoreIpAddresses(string s) {
+        int n=s.length();
+       
+        set<string> ans;
+        vector<string> fi;
+         if(n>12)
+        return fi;
+        string te="";
+        at(0,3,te,ans,n,s);
+        
+        for(auto i: ans)
+        fi.push_back(i);
+        return fi;
+
+    }
+};
