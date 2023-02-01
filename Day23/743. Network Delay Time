@@ -1,0 +1,39 @@
+class Solution {
+public:
+    //Using Dijkstra's algo.
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        vector<pair<int,int>> adj[n+1];
+        for(auto edge: times){
+            adj[edge[0]].push_back({edge[1],edge[2]});
+        }
+        vector<int> dist(n+1,INT_MAX);
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        dist[k] = 0;
+        pq.push({0,k});
+        
+        while(!pq.empty()){
+            auto parentNodeDist = pq.top().first;
+            auto parentNodeValue = pq.top().second;
+            pq.pop();
+            
+            for(auto node: adj[parentNodeValue]){
+                auto nodeV = node.first;
+                auto nodeW = node.second;
+                if(nodeW + parentNodeDist < dist[nodeV]){
+                    dist[nodeV] = nodeW + parentNodeDist;
+                    pq.push({dist[nodeV],nodeV});
+                }
+            }
+        }
+        
+        int mintime = 0;
+        for(int i = 1;i<=n;i++){
+            mintime = max(mintime,dist[i]);
+        }
+        return mintime==INT_MAX?-1:mintime;
+    }
+	
+	
+    //Using Bellman algo.
+    
+};
