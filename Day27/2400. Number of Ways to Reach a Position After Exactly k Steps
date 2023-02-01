@@ -1,0 +1,27 @@
+typedef long long int ll;
+ll md=1e9+7;
+class Solution {
+    ll fn(int pos,int k,vector<vector<ll>> &dp,int enp)
+    {
+        if(k==0)
+        {
+            if(pos==enp)
+            return 1;
+            return 0;
+        }
+        if(dp[pos][k]!=-1)
+        return dp[pos][k];
+        ll x=fn(pos+1,k-1,dp,enp);
+        ll y=fn(pos-1,k-1,dp,enp);
+         dp[pos][k]=(x+y)%md;
+        return dp[pos][k];
+
+    }
+public:
+    int numberOfWays(int startPos, int endPos, int k) {
+        vector<vector<ll>> dp(3000,vector<ll>(k+1,-1));
+        startPos+=1000;
+        endPos+=1000;
+        return fn(startPos,k,dp,endPos);
+    }
+};
