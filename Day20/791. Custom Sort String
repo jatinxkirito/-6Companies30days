@@ -1,0 +1,20 @@
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        vector<int> val(26);
+        for(int i=0;i<order.length();i++)
+        {
+            val[order[i]-'a']=i;
+        }
+        vector<pair<int,int>> srt;
+        for(int i=0;i<s.length();i++)
+        {
+            srt.push_back({val[s[i]-'a'],i});
+        }
+        sort(srt.begin(),srt.end());
+        string fi="";
+        for(auto i: srt)
+        fi.push_back(s[i.second]);
+        return fi;
+    }
+};
