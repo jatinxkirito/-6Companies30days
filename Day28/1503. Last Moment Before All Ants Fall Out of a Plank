@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int getLastMoment(int n, vector<int>& left, vector<int>& right) {
+        if(left.empty())
+        {
+            int mi=1e9;
+            for(auto i: right)
+            mi=min(mi,i);
+            return n-mi;
+        }
+        if(right.empty())
+        {
+            int ma=0;
+            for(auto i: left)
+            ma=max(ma,i);
+            return ma;
+        }
+        int mi=1e9;
+        int ma=0;
+        for(auto i: left)
+        {
+            ma=max(ma,i);
+            
+        }
+        ma=n-ma;
+        for(auto i: right)
+        {
+            mi=min(i,mi);
+        }
+        mi=min(mi,ma);
+        return n-mi;
+    }
+};
