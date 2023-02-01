@@ -1,0 +1,96 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeZeroSumSublists(ListNode* head) {
+        ListNode* trv=head;
+        int su=0;
+        int n=0;
+        while(trv!=NULL)
+        {
+            ++n;
+            trv=trv->next;
+        }
+        vector<int> pr(n,1);
+        trv=head;
+        int i=0;
+        vector<int> val(n);
+        while(trv!=NULL)
+        {
+            val[i]=trv->val;
+            trv=trv->next;
+            i++;
+        }
+        int st=0;
+        for(int i=0;i<n;i++)
+        {
+            if(pr[i]==0)
+            continue;
+            ListNode* trv=head;
+            int x=0;
+            while(x<i)
+            {trv=trv->next;++x;}
+            if(trv==NULL)
+            continue;
+            int su=0;
+            int st=i;
+            for(int j=i;j<n;j++)
+            {
+                if(pr[j]==0)
+                {
+                    trv=trv->next;
+                      su=0;
+                      st=j+1;
+                    continue;
+                  
+                }
+                su+=trv->val;
+                if(su==0)
+                {
+                  for(int k=st;k<=j;k++)
+                  {
+                        pr[k]=0;
+                  }
+                  st=j+1;   
+                }
+                trv=trv->next;
+            }
+           
+        }
+         int ld=-1;
+            for(int i=0;i<n;i++)
+            {
+                if(pr[i])
+                {
+                    ld=i;
+                    break;
+                }
+            }
+            if(ld==-1)
+            {
+                return head=NULL;
+            }
+            head=new ListNode(val[ld]);
+             trv=head;
+             
+            for(int i=ld+1;i<n;i++)
+            {
+                if(pr[i])
+                {
+                     ListNode* te=new ListNode();
+                     te->val=val[i];
+                     trv->next=te;
+                      trv=trv->next;
+                }
+            }
+            return head;
+    }
+};
