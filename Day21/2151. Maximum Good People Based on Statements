@@ -1,0 +1,40 @@
+class Solution {
+    int n;
+    void dfs(vector<int> &cu,int i,int su,int &ans,vector<vector<int>> &a)
+    {
+        if(i==n)
+        {
+            if(ch(a,cu))
+            ans=max(ans,su);
+            return;
+        }
+        dfs(cu,i+1,su,ans,a);
+        cu[i]=1;
+        dfs(cu,i+1,su+1,ans,a);
+        cu[i]=0;
+    }
+    bool ch(vector<vector<int>> &a,vector<int> &cu)
+    {
+        for(int i=0;i<n;i++)
+        {
+            if(cu[i])
+            {
+                for(int j=0;j<n;j++)
+                {
+                    if(a[i][j]!=2&&cu[j]!=a[i][j])
+                    return false;
+
+                }
+            }
+        }
+        return true;
+    }
+public:
+    int maximumGood(vector<vector<int>>& a) {
+         n=a.size();
+       vector<int> cu(n);
+       int ans=0;
+       dfs(cu,0,0,ans,a);
+       return ans;
+    }
+};
