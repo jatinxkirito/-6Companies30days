@@ -1,0 +1,37 @@
+class Solution {
+    void fn(int i,vector<vector<int>> &st,vector<vector<int>> &te,vector<int> &vis,int cu,int &ma,int n,int m)
+    {
+        if(i==m)
+        {
+            ma=max(ma,cu);
+            //cout<<cu<<endl;
+            return;
+        }
+        for(int j=0;j<m;j++)
+        {
+            if(vis[j])
+            continue;
+            int x=0;
+            for(int k=0;k<n;k++)
+            {
+                if(st[i][k]==te[j][k])
+                ++x;
+            }
+            vis[j]=1;
+            // cout<<i<<" "<<j<<" || ";
+            fn(i+1,st,te,vis,cu+x,ma,n,m);
+            vis[j]=0;
+        }
+
+    }
+public:
+    int maxCompatibilitySum(vector<vector<int>>& students, vector<vector<int>>& mentors) {
+        int m=students.size();
+        int n=students[0].size();
+        vector<int> vis(m);
+        int ma=0;
+        fn(0,students,mentors,vis,0,ma, n, m);
+        return ma;
+
+    }
+};
