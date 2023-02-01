@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool asteroidsDestroyed(int m, vector<int>& a) {
+        int cnt=0;
+        long long int ma=m;
+        sort(a.begin(),a.end());
+        for(auto i: a)
+        {
+            if(i<=ma)
+            {
+                ma+=i;
+                ++cnt;
+            }
+            else
+            break;
+        }
+        if(cnt==a.size())
+        return 1;
+        return 0;
+    }
+};
