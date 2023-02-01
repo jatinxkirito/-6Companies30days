@@ -1,0 +1,38 @@
+class Solution {
+    void fn(int i,int n,unordered_map<string,int> &ans,string cu,int &ma,string &s)
+    {
+        if(i==n)
+        {
+            ans[cu]++;
+            int sk=0;
+           for(auto i: ans )
+           {
+               if(i.second>0)
+               ++sk;
+           }
+           ans[cu]--;
+            ma=max(ma,sk);
+            return;
+        
+        }
+        string te=cu;
+        te.push_back(s[i]);
+        fn(i+1,n,ans,te,ma,s);
+        ans[cu]++;
+        string prev=cu;
+        cu="";
+        cu.push_back(s[i]);
+        fn(i+1,n,ans,cu,ma,s);
+        ans[prev]--;
+
+    }
+public:
+    int maxUniqueSplit(string s) {
+        int ma=1;
+        unordered_map<string,int> ans;
+        string cu="";
+        cu.push_back(s[0]);
+        fn(1,s.size(),ans,cu,ma,s);
+        return ma;
+    }
+};
