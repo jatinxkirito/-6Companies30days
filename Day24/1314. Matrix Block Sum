@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<vector<int>> matrixBlockSum(vector<vector<int>>& mat, int k) {
+        int n=mat.size();
+        int m=mat[0].size();
+        vector<vector<int>> su(n+1,vector<int>(m+1));
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=m;j++)
+            {
+                su[i][j]=mat[i-1][j-1]+su[i-1][j]+su[i][j-1]-su[i-1][j-1];
+            }
+        }
+        vector<vector<int>> cu(n,vector<int>(m));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+            
+                int xu=min(n,i+1+k),yu=min(m,j+1+k),xl=max(1,i+1-k),yl=max(1,j+1-k);
+                cu[i][j]=su[xu][yu]-su[xu][yl-1]-su[xl-1][yu]+su[xl-1][yl-1];
+            }
+        }
+        return cu;
+    }
+};
