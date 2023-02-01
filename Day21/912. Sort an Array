@@ -1,0 +1,57 @@
+class Solution {
+    void merge(int st,int mid,int en,vector<int> &arr)
+    {
+        vector<int> ak(en-st+1);
+        int as=st;
+        int ds=mid+1;
+        int i=0;
+        while(as<=mid&&ds<=en)
+        {
+            if(arr[as]<arr[ds])
+            {
+                ak[i]=arr[as];
+                i++;
+                as++;
+            }
+            else
+            {
+                ak[i]=arr[ds];
+                ++i;
+                ++ds;
+            }
+        }
+        while(as<=mid)
+        {
+            ak[i]=arr[as];
+                i++;
+                as++;
+        }
+
+        while(ds<=en)
+        {
+             ak[i]=arr[ds];
+                ++i;
+                ++ds;
+        }
+        for(auto i: ak)
+        {
+            arr[st]=i;
+            ++st;
+        }
+        return;
+    }
+    void mgs(int st,int en,vector<int> &arr)
+    {
+        if(st==en)
+        return;
+        int mid=(st+en)/2;
+        mgs(st,mid,arr);
+        mgs(mid+1,en,arr);
+        merge(st,mid,en,arr);
+    }
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        mgs(0,nums.size()-1,nums);
+        return nums;
+    }
+};
