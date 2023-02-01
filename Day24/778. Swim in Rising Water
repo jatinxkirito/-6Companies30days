@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int swimInWater(vector<vector<int>>& grid) {
+        multiset<pair<int,pair<int,int>>> a;
+        int n=grid.size();
+        vector<vector<int>> vis(n,vector<int>(n));
+        a.insert({grid[0][0],{0,0}});
+        while(!a.empty())
+        {
+            auto it=a.begin();
+            int tt=it->first;
+            int x=(it->second.first);
+            int y=(it->second.second);
+            a.erase(it);
+            if(x==n-1&&y==n-1)
+            return tt;
+            if(x>=n||y>=n||x<0||y<0||vis[x][y])
+            continue;
+            vis[x][y]=1;
+            if(x<n&&y+1<n&&x>=0&&y+1>=0&&!vis[x][y+1])
+            a.insert({max(tt,grid[x][y+1]),{x,y+1}});
+             if(x<n&&y-1<n&&x>=0&&y-1>=0&&!vis[x][y-1])
+            a.insert({max(tt,grid[x][y-1]),{x,y-1}});
+             if(x-1<n&&y<n&&x-1>=0&&y>=0&&!vis[x-1][y])
+            a.insert({max(tt,grid[x-1][y]),{x-1,y}});
+             if(x+1<n&&y<n&&x+1>=0&&y>=0&&!vis[x+1][y])
+            a.insert({max(tt,grid[x+1][y]),{x+1,y}});
+
+
+        }
+        return 0;
+    }
+};
