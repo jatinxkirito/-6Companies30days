@@ -1,0 +1,76 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        int st=0;
+        int en=0;
+        int ct=0;
+        map<int,int> sk;
+        int ans=0;
+        int n=fruits.size();
+        int cnt=0;
+        while(en<n)
+        {
+            if(sk.empty())
+            {
+                ++cnt;
+                ans=max(ans,cnt);
+                sk[fruits[en]]=en+1;
+                ++en;
+                continue;
+            }
+            if(sk.size()==1)
+            {
+                ++cnt;
+                ans=max(ans,cnt);
+                if(sk.find(fruits[en])==sk.end())
+                {
+                    sk[fruits[en]]=en+1;
+
+                }
+                else
+                {
+                    sk[fruits[en]]=en+1;
+                }
+                ++en;
+                continue;
+            }
+            if(sk.size()==2)
+            {
+                 if(sk.find(fruits[en])==sk.end())
+                {
+                    ans=max(ans,cnt);
+                    auto it=sk.begin();
+                    int v1=it->first;
+                    int in1=it->second;
+                    ++it;
+                     int v2=it->first;
+                    int in2=it->second;
+                    sk.clear();
+                    if(in2>in1)
+                    {
+                        sk[v2]=in2;
+                        sk[fruits[en]]=en+1;
+                        cnt=en+1-in1;
+                        ans=max(ans,cnt);
+                    }
+                    else
+                    {
+                        sk[v1]=in1;
+                        sk[fruits[en]]=en+1;
+                        cnt=en+1-in2;
+                        ans=max(ans,cnt);
+                    }
+                }
+                else
+                {
+                    ++cnt;
+                    ans=max(ans,cnt);
+                    sk[fruits[en]]=en+1;
+                }
+                ++en;
+                continue;
+            }
+        }
+        return ans;
+    }
+};
